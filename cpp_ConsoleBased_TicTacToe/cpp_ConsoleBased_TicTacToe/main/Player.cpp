@@ -7,6 +7,7 @@ char Player::GetPlayerSymbol() {
 	return m_Symbol;
 }
 
+
 void Player::AddPoint() {
 	m_Point += 1;
 }

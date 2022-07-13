@@ -1,13 +1,14 @@
 #include <iostream>
 #include "Game.h"
 #include "Player.h"
+#include "Board.h"
 
-// 
 void Game::Run() {
+	Board brd;
 	while (!Game::GameOver()) {
 		// do the game
-		std::cout << Game::Get().m_CurrentMove << "\n";
-		Game::Get().m_CurrentMove += 1;
+		brd.DrawBoard();
+		
 	}
 }
 
