@@ -1,7 +1,7 @@
 #include "Player.h"
 
 
-Player::Player(char symbol) : m_Symbol(symbol), m_Point(0) {}
+Player::Player(char symbol, std::string name) : m_Symbol(symbol), m_Point(0), m_Name(name) {}
 
 char Player::GetPlayerSymbol() {
 	return m_Symbol;
@@ -10,4 +10,8 @@ char Player::GetPlayerSymbol() {
 
 void Player::AddPoint() {
 	m_Point += 1;
+}
+
+std::string Player::GetPlayerName() {
+	return m_Name;
 }

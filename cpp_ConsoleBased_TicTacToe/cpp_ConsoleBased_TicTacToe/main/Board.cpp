@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Game.h"
 
-Board::Board() :m_Player1('X'), m_Player2('O') {
+Board::Board(){
 	GenerateBoard();
 }
 
@@ -14,8 +14,6 @@ bool Board::IsMovePossible(const Point& pt) {
 			return false;
 		}
 	}
-	m_MoveCollector.push_back(pt);
-	Game::Get().m_CurrentMove++;
 	return true;
 }
 
@@ -34,6 +32,7 @@ Point Board::HandleInput() {
 	int x, y;
 	std::cout << "Please Choose a location.\n";		
 	
+	// this loop will not stop until the inputs are valid
 	do {
 		std::cout << "Enter the X: ";
 		CheckNumber((bool)(std::cin >> x));
@@ -47,6 +46,7 @@ Point Board::HandleInput() {
 			std::cout << "Please Enter a valid Number within 0 - 3\n";
 			inputsCorrect = false;
 		}
+
 		
 	} while (!inputsCorrect);
 
@@ -66,21 +66,15 @@ void Board::CheckNumber(bool input) {
 
 void Board::DrawBoard() {
 
-	std::cout << "X\n";
+	std::cout << "(X)\n";
+	std::cout << "   -------------\n";
 	for (int x = 0; x < m_BoardHeight; x++) {
-		std::cout << x+1 << " | ";
+		std::cout << x+1 << "  | ";
 		for (int y = 0; y < m_BoardWidth; y++) {
 			std::cout  << m_Board[x][y] << " | ";
 		}
 		std::cout << "\n";
 	}
-	Point playerInput = HandleInput();
-	if (IsMovePossible(playerInput)) {
-		m_Board[playerInput.x -1][playerInput.y - 1] = '2';
-	}
-	else {
-		std::cout << "Spot already taken. Please choose another one.\n";
-	}
-	system("pause");
-	system("CLS");
+	std::cout << "   -------------\n";
+	std::cout << "     1   2   3   (Y)\n";
 }
