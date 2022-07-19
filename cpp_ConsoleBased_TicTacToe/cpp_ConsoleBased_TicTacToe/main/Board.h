@@ -9,7 +9,7 @@ public:
 
 	void DrawBoard();
 	bool IsMovePossible(const Point& pt);
-private:
+public:
 	static const int m_BoardHeight = 3;
 	static const int m_BoardWidth = 3;
 

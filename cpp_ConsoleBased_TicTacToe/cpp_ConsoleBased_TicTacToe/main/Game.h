@@ -1,6 +1,10 @@
 #pragma once
+#include <iostream>
+#include <vector>
 #include "Player.h"
 #include "Board.h"
+#include "Point.h"
+
 class Game
 {
 public:
@@ -14,6 +18,7 @@ public:
 	bool CheckColumns();
 	bool CheckRows();
 	bool CheckDiagonals();
+	bool CheckSymbols(const std::vector<char>& container);
 
 private:
 
@@ -24,7 +29,7 @@ private:
 	Player m_Player1;
 	Player m_Player2;
 	Player* m_CurrentPlayer;
-
-
+	Player* m_PreviousPlayer;
+	
 };
 
