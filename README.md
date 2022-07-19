@@ -1,6 +1,5 @@
 # Console-TicTacToe
-A Console-based TicTacToe game
+A Console-based TicTacToe Game
 
-#current status : not yet finished
-the board and input handling now works,
-the future plans is to have the win handler (matching adjacent symbols)
+# status : finished
+it still needs some polishing but the mechanics are now working fine.
