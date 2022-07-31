@@ -38,13 +38,9 @@ bool Game::GameOver() {
 		return true;
 	}
 
-
 	if (m_CurrentMove >= m_MaxMove) {
-
 		return true;
 	}
-
-
 
 	return false;
 }
