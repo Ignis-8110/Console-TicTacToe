@@ -63,13 +63,26 @@ void Game::PlayerSwitchHandler() {
 
 
 bool Game::CheckColumns() {
-	for (int x = 0; x < 3; x++) {
-		// the first condition checks if the symbol is the player's corresponding symbols
-		// checks if the columns are the same, or we got 3 adjacent symbols
-		if ((m_GameBoard.m_Board[0][x] == m_Player1.GetPlayerSymbol() 
-			|| m_GameBoard.m_Board[0][x] == m_Player2.GetPlayerSymbol())
-			&& (m_GameBoard.m_Board[0][x] == m_GameBoard.m_Board[1][x])
-			&& (m_GameBoard.m_Board[0][x] == m_GameBoard.m_Board[2][x])) {
+	//for (int x = 0; x < 3; x++) {
+	//	// the first condition checks if the symbol is the player's corresponding symbols
+	//	// checks if the columns are the same, or we got 3 adjacent symbols
+	//	if ((m_GameBoard.m_Board[0][x] == m_Player1.GetPlayerSymbol() 
+	//		|| m_GameBoard.m_Board[0][x] == m_Player2.GetPlayerSymbol())
+	//		&& (m_GameBoard.m_Board[0][x] == m_GameBoard.m_Board[1][x])
+	//		&& (m_GameBoard.m_Board[0][x] == m_GameBoard.m_Board[2][x])) {
+	//		std::cout << "COLUMN\n";
+	//		return true;
+	//	}
+	//}
+	std::vector<char> columnSymbols;
+	for (int y = 0; y < m_GameBoard.m_BoardHeight; y++) {
+		for (int x = 0; x < m_GameBoard.m_BoardWidth; x++) {
+			if ((m_GameBoard.m_Board[x][y] == m_Player1.GetPlayerSymbol()
+				|| m_GameBoard.m_Board[x][y] == m_Player2.GetPlayerSymbol())) {
+				columnSymbols.push_back(m_GameBoard.m_Board[x][y]);
+			}
+		}
+		if (CheckSymbols(columnSymbols) && columnSymbols.size() >= m_GameBoard.m_BoardHeight) {
 			std::cout << "COLUMN\n";
 			return true;
 		}
@@ -94,17 +107,17 @@ bool Game::CheckRows() {
 // Checks the left and right diagonal symbols.
 // this function is scalable depending on the size of the grid
 bool Game::CheckDiagonals() {
-	std::vector<char> rDiagCollector;
-	std::vector<char> lDiagCollector;
+	std::vector<char> rDiagSymbols;
+	std::vector<char> lDiagSymbols;
 	for (int x = 0; x < 3; x++) {
 
 		// checks the left diagonal symbols
 		if (m_GameBoard.m_Board[0][0] == m_Player1.GetPlayerSymbol()
 			|| m_GameBoard.m_Board[0][0] == m_Player2.GetPlayerSymbol()) {
 			for (int i = 0; i < m_GameBoard.m_BoardHeight; i++) {
-				lDiagCollector.push_back(m_GameBoard.m_Board[i][i]);
+				lDiagSymbols.push_back(m_GameBoard.m_Board[i][i]);
 			}
-			if (CheckSymbols(lDiagCollector)) {
+			if (CheckSymbols(lDiagSymbols)) {
 				std::cout << "LEFT DIAG\n";
 				return true;
 			}
@@ -114,9 +127,9 @@ bool Game::CheckDiagonals() {
 		if (m_GameBoard.m_Board[0][m_GameBoard.m_BoardHeight - 1] == m_Player1.GetPlayerSymbol()
 			|| m_GameBoard.m_Board[0][m_GameBoard.m_BoardHeight - 1] == m_Player2.GetPlayerSymbol()) {
 			for (int i = 0; i < m_GameBoard.m_BoardHeight; i++) {
-				rDiagCollector.push_back(m_GameBoard.m_Board[(m_GameBoard.m_BoardHeight - 1) - i][i]);
+				rDiagSymbols.push_back(m_GameBoard.m_Board[(m_GameBoard.m_BoardHeight - 1) - i][i]);
 			}
-			if (CheckSymbols(rDiagCollector)) {
+			if (CheckSymbols(rDiagSymbols)) {
 				std::cout << "RIGHT DIAG\n";
 				return true;
 			}
@@ -126,10 +139,15 @@ bool Game::CheckDiagonals() {
 	}
 }
 bool Game::CheckSymbols(const std::vector<char>& container){
-	for (auto& symbol : container) {
-		if (symbol != m_PreviousPlayer->GetPlayerSymbol()) {
-			return false;
+	if (container.empty())
+		return false;
+	if (container.size() >= m_GameBoard.m_BoardHeight) {
+		for (auto& symbol : container) {
+			if (symbol != m_PreviousPlayer->GetPlayerSymbol()) {
+				return false;
+			}
 		}
 	}
+	
 	return true;
 }
